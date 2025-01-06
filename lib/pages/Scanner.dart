@@ -29,18 +29,7 @@ class _Scanner1State extends State<Scanner1> {
     _imagePicker = ImagePicker();
   }
 
-  Future<void> _pickImageFromGallery() async {
-    final XFile? pickedFile =
-        await _imagePicker.pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        setState(() {
-          _pickedImage = pickedFile;
-          _recognitions1 = null; // Clear previous recognitions
-          _isLoading = true;
-        });
-        await _processImage();
-      }     
-  }
+  
 
   Future<void> _pickImageFromCamera() async{
     final XFile? pickedFile =
@@ -91,7 +80,7 @@ class _Scanner1State extends State<Scanner1> {
         mainAxisAlignment: MainAxisAlignment.center,
          children: <Widget>[
           const Text(
-            "Scan My Pechay",
+            "Pechay Scanner",
             style: TextStyle(fontSize: 20),
           ),
           const SizedBox(height: 20),       
@@ -153,19 +142,7 @@ class _Scanner1State extends State<Scanner1> {
             ),
 
             const SizedBox(height: 20),
-
-            ElevatedButton.icon(
-              onPressed: _pickImageFromGallery,
-               label: const Text("Pick From Gallery",
-               style: TextStyle(color: Colors.black)),
-               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(Colors.white),
-                padding: WidgetStateProperty.all(
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                ),
-               ),
-              ),
-              const SizedBox(height: 16),
+        
               //Display combined recognized if available
               if (_recognitions1 != null)
             Card(
@@ -312,7 +289,7 @@ class _Scanner1State extends State<Scanner1> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Recommendations for Healthy Pechay:",
+                            "Recommendations for Black Rot:",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
@@ -344,103 +321,7 @@ class _Scanner1State extends State<Scanner1> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Recommendations for Healthy Pechay:",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            "1. Avoid overhead watering to minimize moisture on leaves.",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Text(
-                            "2. Apply copper-based fungicide to affected plants.",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Text(
-                            "3. Ensure proper plant spacing for adequate airflow.",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ],
-                      ),
-                    ),
-                    if (_recognitions1 != null &&
-                      _recognitions1![0]['label'] == 'Leaf_Miner_Damage')
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 10),
-                      padding: EdgeInsets.all(10),
-                      color: Colors.grey[200],
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Recommendations for Healthy Pechay:",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            "1. Avoid overhead watering to minimize moisture on leaves.",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Text(
-                            "2. Apply copper-based fungicide to affected plants.",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Text(
-                            "3. Ensure proper plant spacing for adequate airflow.",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ],
-                      ),
-                    ),
-                    if (_recognitions1 != null &&
-                      _recognitions1![0]['label'] == 'Pest')
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 10),
-                      padding: EdgeInsets.all(10),
-                      color: Colors.grey[200],
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Recommendations for Healthy Pechay:",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            "1. Avoid overhead watering to minimize moisture on leaves.",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Text(
-                            "2. Apply copper-based fungicide to affected plants.",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Text(
-                            "3. Ensure proper plant spacing for adequate airflow.",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ],
-                      ),
-                    ),
-                    if (_recognitions1 != null &&
-                      _recognitions1![0]['label'] == 'Unknown disease')
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 10),
-                      padding: EdgeInsets.all(10),
-                      color: Colors.grey[200],
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Recommendations for Healthy Pechay:",
+                            "Recommendations for Downy Mildew:",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
@@ -463,7 +344,7 @@ class _Scanner1State extends State<Scanner1> {
                       ),
                     ),
                                       if (_recognitions1 != null &&
-                      _recognitions1![0]['label'] == 'Undefined')
+                      _recognitions1![0]['label'] == 'Unknown_Object')
                     Container(
                       margin: EdgeInsets.symmetric(vertical: 10),
                       padding: EdgeInsets.all(10),
@@ -472,7 +353,7 @@ class _Scanner1State extends State<Scanner1> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Recommendations for Undefined:",
+                            "Your Scan Result is an Unknown Object, here are some posible reason",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
