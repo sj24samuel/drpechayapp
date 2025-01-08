@@ -1,4 +1,3 @@
-import 'package:drpechayapp/pages/Scanner.dart';
 import 'package:flutter/material.dart';
 
 
@@ -66,7 +65,7 @@ class HomeWidget extends StatelessWidget {
                       ),
                     ),
                     Image.asset(
-                      'assets/images/plant1.jpg', // Path to local image asset
+                      'assets/images/Aimage.gif', // Path to local image asset
                       height: 250,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -100,7 +99,7 @@ class HomeWidget extends StatelessWidget {
                       ),
                     ),
                     Image.asset(
-                      'assets/images/plant1.jpg', // Path to local image asset
+                      'assets/images/botanist.gif', // Path to local image asset
                       height: 250,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -134,7 +133,7 @@ class HomeWidget extends StatelessWidget {
                       ),
                     ),
                     Image.asset(
-                      'assets/images/plant1.jpg', // Path to local image asset
+                      'assets/images/calculate.gif', // Path to local image asset
                       height: 250,
                       width: double.infinity,
                       fit: BoxFit.cover,

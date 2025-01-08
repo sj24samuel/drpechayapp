@@ -29,11 +29,9 @@ class _Scanner1State extends State<Scanner1> {
     _imagePicker = ImagePicker();
   }
 
-  
-
-  Future<void> _pickImageFromCamera() async{
+  Future<void> _pickImageFromGallery() async {
     final XFile? pickedFile =
-        await _imagePicker.pickImage(source: ImageSource.camera);
+        await _imagePicker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         setState(() {
           _pickedImage = pickedFile;
@@ -43,6 +41,19 @@ class _Scanner1State extends State<Scanner1> {
         await _processImage();
       }     
   }
+
+  // Future<void> _pickImageFromCamera() async{
+  //   final XFile? pickedFile =
+  //       await _imagePicker.pickImage(source: ImageSource.camera);
+  //     if (pickedFile != null) {
+  //       setState(() {
+  //         _pickedImage = pickedFile;
+  //         _recognitions1 = null; // Clear previous recognitions
+  //         _isLoading = true;
+  //       });
+  //       await _processImage();
+  //     }     
+  // }
 
   Future<void> _initializeTflite() async {
     // Load the model and labels
@@ -130,18 +141,19 @@ class _Scanner1State extends State<Scanner1> {
             const SizedBox(height: 20), 
 
             ElevatedButton.icon(
-              onPressed: _pickImageFromCamera,
-              label: const Text("Take a Picture",
-                style: TextStyle(color: Colors.black)),
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Colors.white),
-                  padding: WidgetStateProperty.all(
-                    const  EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  ),
-              )
+              onPressed: _pickImageFromGallery,
+               label: const Text("Pick From Gallery",
+               style: TextStyle(color: Colors.black)),
+               style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all(Colors.white),
+                padding: WidgetStateProperty.all(
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                ),
+               ),
             ),
 
             const SizedBox(height: 20),
+
         
               //Display combined recognized if available
               if (_recognitions1 != null)

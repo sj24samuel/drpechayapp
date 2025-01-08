@@ -1,9 +1,6 @@
-Alternaria_Leaf_Spot
-Bacterial_Soft_Rot
-Black_Rot
-Downy_Mildew
-Healthy_Pechay
-Leaf_Miner_Damage
-Pest
-Undefined
-Unknown disease
+0 Alternaria_Leaf_Spot
+1 Bacterial_Soft_Rot
+2 Downy_Mildew
+3 Black_Rot
+4 Healthy_Pechay
+5 Unknown_Object

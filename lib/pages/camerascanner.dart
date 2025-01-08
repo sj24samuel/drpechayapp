@@ -15,6 +15,7 @@ class _CamerascannerState extends State<Camerascanner> {
   late List<CameraDescription> cameras;
   bool isDetecting = false;
   String? detectionResult;
+  double? detectionConfidence;
   late String res;
 
   @override
@@ -46,9 +47,12 @@ class _CamerascannerState extends State<Camerascanner> {
         // Run the machine learning model on the frame
         var result = await _detectDisease(image);
 
-        setState(() {
-          detectionResult = result;
-        });
+        if (mounted) {
+          setState(() {
+            detectionResult = result['label'];
+            detectionConfidence = result['confidence'];
+          });
+        }
 
         isDetecting = false;
       }
@@ -60,10 +64,11 @@ class _CamerascannerState extends State<Camerascanner> {
       model: "assets/bokchoymodel.tflite",
       labels: "assets/petchay_labels.txt",
     ))!;
-    print(res);
+    print("Model loaded: $res");
   }
 
-  Future<String?> _detectDisease(CameraImage image) async {
+  Future<Map<String, dynamic>> _detectDisease(CameraImage image) async {
+    print("Running model on frame...");
     var results = await Tflite.runModelOnFrame(
       bytesList: image.planes.map((plane) {
         return plane.bytes;
@@ -79,18 +84,28 @@ class _CamerascannerState extends State<Camerascanner> {
     );
     print('Inference results: $results');
     if (results != null && results.isNotEmpty) {
-      return results.first['label']; // Get the first result (highest confidence)
+      var result = results.first;
+      return {
+        'label': result['label'],
+        'confidence': result['confidence']
+      };
     }
-    return "No disease detected";
+    return {
+      'label': 'No disease detected',
+      'confidence': 0.0
+    };
   }
 
   @override
   void dispose() {
+    // Stop the camera stream
+    _cameraController?.stopImageStream();
+    // Dispose of the camera controller
     _cameraController?.dispose();
-    Tflite.close();  // Release the model
+    // Release TensorFlow Lite resources
+    Tflite.close();  
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +137,9 @@ class _CamerascannerState extends State<Camerascanner> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                detectionResult ?? "Detecting...",
+                detectionResult != null
+                  ? "$detectionResult\nConfidence: ${(detectionConfidence! * 100).toStringAsFixed(2)}%"
+                  : "Detecting...",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18,
